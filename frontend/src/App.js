@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { NavBar } from "@/components/NavBar";
 import { ReservationPanel } from "@/components/ReservationPanel";
 import { AdminView } from "@/components/AdminView";
+import { MyBookings } from "@/components/MyBookings";
 import { ResortScene } from "@/three/Scene";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -24,6 +25,7 @@ export default function App() {
   const [selectedId, setSelectedId] = useState(null);
   const [view, setView] = useState("map");
   const [bookingsCount, setBookingsCount] = useState(0);
+  const [myBookingsOpen, setMyBookingsOpen] = useState(false);
 
   useEffect(() => {
     axios.get(`${API}/villas`).then((r) => setVillas(r.data)).catch(console.error);
@@ -48,7 +50,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <NavBar view={view} setView={(v) => { setView(v); if (v === "admin") setSelectedId(null); }} dates={dates} setDates={setDates} bookingsCount={bookingsCount} />
+      <NavBar view={view} setView={(v) => { setView(v); if (v === "admin") setSelectedId(null); }} dates={dates} setDates={setDates} bookingsCount={bookingsCount} onOpenMyBookings={() => setMyBookingsOpen(true)} />
 
       {villas.length > 0 && (
         <ResortScene
@@ -88,6 +90,8 @@ export default function App() {
       />
 
       {view === "admin" && <AdminView onChange={refreshAvailability} />}
+
+      <MyBookings open={myBookingsOpen} onClose={() => setMyBookingsOpen(false)} onChanged={refreshAvailability} />
 
       <Toaster position="bottom-left" richColors theme="dark" />
     </div>

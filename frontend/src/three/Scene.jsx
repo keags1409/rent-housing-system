@@ -25,7 +25,8 @@ function CameraRig({ selectedConfig, paused }) {
 
   useFrame((_, dt) => {
     const f = anim.current.focus;
-    speed.current = THREE.MathUtils.lerp(speed.current, paused ? 0 : 1, Math.min(dt * 4, 1));
+    if (paused) speed.current = 0;
+    else speed.current = THREE.MathUtils.lerp(speed.current, 1, Math.min(dt * 1.5, 1));
     if (f < 0.98) angle.current += dt * 0.055 * speed.current * (1 - f);
     const orbX = Math.sin(angle.current) * 23;
     const orbZ = Math.cos(angle.current) * 23;

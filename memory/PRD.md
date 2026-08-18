@@ -23,11 +23,12 @@ Ultra-premium interactive 3D vacation rental booking web app (React, Tailwind, T
 
 ## Implemented (June 2026)
 - Full 3D interactive map, hover/click/camera choreography, reservation flow, date-driven availability sync, admin dashboard with delete → live 3D state sync
-- Tested by testing agent: 100% backend (12 pytest cases at /app/backend/tests/test_backend.py) and 100% frontend
+- Iteration 2: MOCKED confirmation emails (HTML stored in `email_log` collection + logged, Resend-ready), guest booking lookup/cancel by email (My Bookings modal, POST /reservations/{id}/cancel with email match), owner-password admin gate (ADMIN_PASSWORD=1234567890 in backend/.env, JWT Bearer, 5-fail/15-min lockout keyed on X-Forwarded-For), instant orbit pause on hover (lag fix), mobile responsive nav/panel/admin
+- Tested by testing agent: iteration 1 (100%/100%), iteration 2 (19/20 backend — lockout fixed post-report and curl-verified; 100% frontend)
 
 ## Backlog / Next
+- P1: Real email sending via Resend once user provides API key (template + log already in place)
 - P1: Larger invisible click target around villas for trackpad users
 - P1: Filter pills (bedrooms, waterfront, price) in nav
-- P2: Admin metrics respect search filter
-- P2: Sound design / ambient audio toggle, day-night cycle
-- P2: Email confirmation (Resend), payments (Stripe) if promoted beyond demo
+- P2: Gate /api/stats if metrics become sensitive; TTL index on email_log
+- P2: Sound design / ambient audio toggle, day-night cycle, payments (Stripe) if promoted beyond demo

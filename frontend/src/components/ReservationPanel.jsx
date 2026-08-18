@@ -36,7 +36,7 @@ export const ReservationPanel = ({ villa, booked, dates, onClose, onBooked }) =>
         special_requests: form.requests || null,
       });
       toast.success(`${villa.name} reserved`, {
-        description: `${res.data.nights} nights · $${res.data.total_price.toLocaleString()} · confirmation sent to ${form.email}`,
+        description: `${res.data.nights} nights · $${res.data.total_price.toLocaleString()} · confirmation email prepared for ${form.email}`,
       });
       setForm({ name: "", email: "", guests: 2, requests: "" });
       onBooked();

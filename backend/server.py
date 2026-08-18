@@ -1,14 +1,16 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Query
+from fastapi import FastAPI, APIRouter, HTTPException, Query, Request, Depends
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
+import re
+import jwt
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional
 import uuid
-from datetime import datetime, timezone, date
+from datetime import datetime, timezone, timedelta, date
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -84,6 +86,54 @@ VILLAS = [
 ]
 
 RESORT_FEE = 75
+JWT_ALGORITHM = "HS256"
+
+
+def create_admin_token() -> str:
+    payload = {"sub": "owner", "type": "admin", "exp": datetime.now(timezone.utc) + timedelta(hours=24)}
+    return jwt.encode(payload, os.environ["JWT_SECRET"], algorithm=JWT_ALGORITHM)
+
+
+async def require_admin(request: Request):
+    auth = request.headers.get("Authorization", "")
+    if not auth.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    try:
+        payload = jwt.decode(auth[7:], os.environ["JWT_SECRET"], algorithms=[JWT_ALGORITHM])
+        if payload.get("type") != "admin":
+            raise HTTPException(status_code=401, detail="Invalid token type")
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+
+class AdminLogin(BaseModel):
+    password: str
+
+
+def build_confirmation_email(res: "Reservation", villa: dict) -> str:
+    return f"""
+<div style="font-family:Georgia,serif;max-width:560px;margin:0 auto;background:#0C2E24;color:#FAF8F5;border-radius:16px;overflow:hidden">
+  <div style="padding:32px;text-align:center;border-bottom:1px solid rgba(212,163,89,.3)">
+    <div style="color:#D4A359;letter-spacing:6px;font-size:12px">AURA · FOREST LAKE RESORT</div>
+    <h1 style="font-weight:400;margin:16px 0 0">Your stay is confirmed</h1>
+  </div>
+  <div style="padding:32px">
+    <p>Dear {res.guest_name},</p>
+    <p>We are delighted to confirm your reservation at <strong>{villa['name']}</strong> ({villa['tag']}).</p>
+    <table style="width:100%;color:#FAF8F5;font-size:14px;line-height:2">
+      <tr><td>Check-in</td><td align="right"><strong>{res.check_in}</strong></td></tr>
+      <tr><td>Check-out</td><td align="right"><strong>{res.check_out}</strong></td></tr>
+      <tr><td>Guests</td><td align="right"><strong>{res.guests}</strong></td></tr>
+      <tr><td>{res.nights} nights × ${villa['price_per_night']}</td><td align="right">${res.nights * villa['price_per_night']:,}</td></tr>
+      <tr><td>Resort fee</td><td align="right">${RESORT_FEE}</td></tr>
+      <tr><td style="color:#D4A359"><strong>Total</strong></td><td align="right" style="color:#D4A359"><strong>${res.total_price:,}</strong></td></tr>
+    </table>
+    <p style="color:rgba(250,248,245,.6);font-size:13px">Confirmation ID: {res.id}</p>
+    <p>We look forward to welcoming you to the lake.</p>
+  </div>
+</div>"""
 
 
 class ReservationCreate(BaseModel):
@@ -161,16 +211,66 @@ async def create_reservation(payload: ReservationCreate):
         special_requests=payload.special_requests,
     )
     await db.reservations.insert_one(reservation.model_dump())
+    email_html = build_confirmation_email(reservation, villa)
+    await db.email_log.insert_one({
+        "id": str(uuid.uuid4()), "reservation_id": reservation.id,
+        "to": reservation.guest_email, "subject": f"Your stay at {villa['name']} is confirmed — AURA Resort",
+        "html": email_html, "status": "logged",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    })
+    logger.info(f"[EMAIL MOCKED] Confirmation email logged for {reservation.guest_email} (reservation {reservation.id})")
     return reservation
 
 
-@api_router.get("/reservations", response_model=List[Reservation])
+@api_router.post("/admin/login")
+async def admin_login(payload: AdminLogin, request: Request):
+    xff = request.headers.get("X-Forwarded-For", "")
+    ip = xff.split(",")[0].strip() if xff else (request.client.host if request.client else "unknown")
+    now = datetime.now(timezone.utc).timestamp()
+    attempt = await db.login_attempts.find_one({"identifier": ip})
+    if attempt and attempt.get("count", 0) >= 5 and now - attempt.get("last", 0) < 900:
+        raise HTTPException(status_code=429, detail="Too many attempts. Try again in 15 minutes.")
+    if payload.password != os.environ["ADMIN_PASSWORD"]:
+        await db.login_attempts.update_one(
+            {"identifier": ip},
+            {"$inc": {"count": 1}, "$set": {"last": now}},
+            upsert=True,
+        )
+        raise HTTPException(status_code=401, detail="Incorrect owner password")
+    await db.login_attempts.delete_one({"identifier": ip})
+    return {"token": create_admin_token()}
+
+
+@api_router.get("/reservations", response_model=List[Reservation], dependencies=[Depends(require_admin)])
 async def list_reservations():
     docs = await db.reservations.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     return docs
 
 
-@api_router.delete("/reservations/{reservation_id}")
+@api_router.get("/my-reservations", response_model=List[Reservation])
+async def my_reservations(email: str = Query(...)):
+    docs = await db.reservations.find(
+        {"guest_email": {"$regex": f"^{re.escape(email.strip())}$", "$options": "i"}}, {"_id": 0}
+    ).sort("check_in", 1).to_list(200)
+    return docs
+
+
+class CancelRequest(BaseModel):
+    email: EmailStr
+
+
+@api_router.post("/reservations/{reservation_id}/cancel")
+async def cancel_reservation(reservation_id: str, payload: CancelRequest):
+    res = await db.reservations.find_one({"id": reservation_id}, {"_id": 0})
+    if not res:
+        raise HTTPException(status_code=404, detail="Reservation not found")
+    if res["guest_email"].lower() != payload.email.lower():
+        raise HTTPException(status_code=403, detail="Email does not match this reservation")
+    await db.reservations.delete_one({"id": reservation_id})
+    return {"cancelled": True}
+
+
+@api_router.delete("/reservations/{reservation_id}", dependencies=[Depends(require_admin)])
 async def delete_reservation(reservation_id: str):
     result = await db.reservations.delete_one({"id": reservation_id})
     if result.deleted_count == 0:

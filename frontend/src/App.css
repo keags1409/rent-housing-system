@@ -212,7 +212,7 @@
 /* ---------- reservation drawer ---------- */
 .panel-drawer {
   position: absolute;
-  top: 58px;
+  top: 104px;
   right: 0;
   bottom: 0;
   width: 100%;
@@ -226,6 +226,9 @@
   transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .panel-open { transform: translateX(0); }
+@media (min-width: 768px) {
+  .panel-drawer { top: 58px; }
+}
 .panel-scroll::-webkit-scrollbar { width: 5px; }
 .panel-scroll::-webkit-scrollbar-thumb { background: rgba(212, 163, 89, 0.3); border-radius: 4px; }
 
@@ -456,6 +459,7 @@
 .admin-table td {
   padding: 14px 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
 }
 .admin-table tbody tr { transition: background-color 0.2s ease; }
 .admin-table tbody tr:hover { background: rgba(255, 255, 255, 0.03); }
@@ -472,3 +476,101 @@
 .delete-btn:hover { color: #f87171; background: rgba(248, 113, 113, 0.12); }
 
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* ---------- my bookings button ---------- */
+.my-bookings-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.75);
+}
+.my-bookings-btn:hover {
+  border-color: rgba(212, 163, 89, 0.45);
+  color: #faf8f5;
+}
+
+/* ---------- modals ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(10, 18, 14, 0.6);
+  backdrop-filter: blur(8px);
+  animation: adminIn 0.3s ease both;
+}
+.modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 22px;
+  padding: 28px;
+  background: linear-gradient(180deg, rgba(15, 33, 26, 0.96), rgba(12, 25, 20, 0.98));
+  border: 1px solid rgba(212, 163, 89, 0.25);
+  box-shadow: 0 30px 80px rgba(8, 20, 15, 0.6);
+  animation: cardIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.modal-input {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 11px 14px;
+  color: #faf8f5;
+  font-size: 13.5px;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.modal-input:focus {
+  border-color: rgba(212, 163, 89, 0.6);
+  box-shadow: 0 0 0 3px rgba(212, 163, 89, 0.12);
+}
+.modal-input::placeholder { color: rgba(255, 255, 255, 0.25); }
+.modal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 11px 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #d4a359, #b8863d);
+  color: #16201b;
+  font-weight: 700;
+  font-size: 13px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.modal-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 0 20px rgba(212, 163, 89, 0.4); }
+.booking-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.cancel-booking-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #fca5a5;
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  transition: background-color 0.2s ease;
+}
+.cancel-booking-btn:hover { background: rgba(248, 113, 113, 0.22); }
+
+/* ---------- mobile ---------- */
+@media (max-width: 767px) {
+  .hero-caption h1 { font-size: 1.7rem; }
+  .hero-caption { max-width: 78vw; }
+  .back-orbit-btn { bottom: 18px; left: 16px; padding: 9px 16px; font-size: 12px; }
+  .date-pill { padding: 5px 10px; }
+  .villa-tag { font-size: 11px; padding: 5px 10px 5px 12px; }
+  .hover-card { min-width: 175px; padding: 11px 14px; }
+}
