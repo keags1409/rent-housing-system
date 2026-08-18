@@ -1,0 +1,255 @@
+{
+  "project_name": "AURA | 3D Luxury Forest Lake Resort & Vacation Booking",
+  "app_type": "hybrid_fullstack (3D Experience-Driven Resort & Villa Booking)",
+  "emotional_archetype": "Organic Luxury & Forest Sanctuary (Earthy Warm Beige + Deep Emerald Green + Golden Hour Luminescence)",
+  "design_philosophy": {
+    "fusion": "Architectural Studio Precision x High-End Scandinavian Eco-Resort x Cinematic 3D Scrollytelling",
+    "core_principles": [
+      "3D Spatial Discovery: Replace flat lists with an immersive, interactive 3D mini landscape.",
+      "Tactile Glassmorphism: Frosted floating micro-cards with backdrop saturate and gold-rimmed borders.",
+      "Golden Hour Lighting: Soft directional sunlight (2800K warm glow) with soft contact shadows and fog depth.",
+      "Fluid Camera Choreography: Orbit top-down view by default, smooth lerp/zip-down isometric zoom on villa focus.",
+      "Real-time Spatial Feedback: Dynamic glowing bounding boxes (neon emerald for available, amber for reserved, matte dark slate pulse for booked)."
+    ]
+  },
+  "typography": {
+    "font_family_heading": "Outfit, serif",
+    "font_family_display": "Playfair Display, Cormorant Garamond, serif",
+    "font_family_body": "Plus Jakarta Sans, sans-serif",
+    "font_family_mono": "JetBrains Mono, monospace",
+    "font_weights": {
+      "light": 300,
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "hierarchy": {
+      "hero_title": "text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight leading-none font-display",
+      "section_h2": "text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight leading-tight",
+      "card_title": "text-xl sm:text-2xl font-medium tracking-normal",
+      "body_text": "text-base leading-relaxed font-body",
+      "caption_mono": "text-xs sm:text-sm font-mono tracking-widest uppercase"
+    }
+  },
+  "colors": {
+    "palette": {
+      "background_beige": "#F7F5EE",
+      "surface_sand": "#EFECE1",
+      "surface_dark": "#121915",
+      "emerald_deep": "#0C2E24",
+      "emerald_mid": "#164E3D",
+      "emerald_light": "#2D705B",
+      "gold_warm": "#D4A359",
+      "amber_accent": "#E68A2E",
+      "neon_green_available": "#10B981",
+      "neon_amber_reserved": "#F59E0B",
+      "matte_dark_booked": "#1F2926",
+      "text_primary_dark": "#16201B",
+      "text_secondary_muted": "#5C6B62",
+      "text_light": "#FAF8F5"
+    },
+    "gradients": {
+      "golden_sunset": "linear-gradient(135deg, rgba(212,163,89,0.2) 0%, rgba(12,46,36,0.8) 100%)",
+      "emerald_glass": "linear-gradient(180deg, rgba(22,78,61,0.85) 0%, rgba(12,46,36,0.95) 100%)",
+      "sand_glass": "linear-gradient(180deg, rgba(247,245,238,0.85) 0%, rgba(239,236,225,0.95) 100%)"
+    }
+  },
+  "visual_enhancers": {
+    "glassmorphism": {
+      "card_dark": "bg-[#0C2E24]/75 backdrop-blur-xl backdrop-saturate-150 border border-emerald-400/20 shadow-2xl rounded-2xl",
+      "card_light": "bg-[#F7F5EE]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#D4A359]/30 shadow-xl rounded-2xl",
+      "navbar": "bg-[#121915]/80 backdrop-blur-2xl border-b border-white/10"
+    },
+    "shadows": {
+      "ambient_glow": "0 20px 50px rgba(12, 46, 36, 0.3)",
+      "gold_ring": "0 0 25px rgba(212, 163, 89, 0.4)",
+      "neon_emerald_glow": "0 0 20px rgba(16, 185, 129, 0.5)",
+      "neon_amber_glow": "0 0 20px rgba(245, 158, 11, 0.5)"
+    }
+  },
+  "3d_scene_architecture": {
+    "landscape": "Low-poly stylized mountain basin with a serene pine forest, winding crystal lake, shoreline rocks, and elevated wooden decks.",
+    "villas": [
+      {
+        "id": "villa-01",
+        "name": "The Glass A-Frame",
+        "tagline": "Panoramic lakefront sanctuary with sky-facing glass ridge",
+        "position": [-7, 1.2, -4],
+        "rotation": [0, 0.35, 0],
+        "price": "$650 / night",
+        "bedrooms": 2,
+        "max_guests": 4,
+        "rating": 4.96,
+        "features": ["Private Sauna", "Deep Soaking Tub", "Glass Observatory Roof", "Deck Kayaks"],
+        "hero_image": "https://images.unsplash.com/photo-1762568702039-9ef749e06152?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHw0fHxsdXh1cnklMjBmb3Jlc3QlMjB2aWxsYSUyMGV4dGVyaW9yJTIwYXJjaGl0ZWN0dXJlJTIwbGFrZSUyMHJldHJlYXR8ZW58MHx8fHwxNzg3MDcyNzYzfDA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "villa-02",
+        "name": "Pine Haven Lodge",
+        "tagline": "Elevated forest canopy chalet tucked among giant hemlocks",
+        "position": [-2, 2.1, 5],
+        "rotation": [0, -0.6, 0],
+        "price": "$520 / night",
+        "bedrooms": 3,
+        "max_guests": 6,
+        "rating": 4.92,
+        "features": ["Heated Plunge Pool", "Outdoor Firepit", "Cantilevered Balcony", "Chef Kitchen"],
+        "hero_image": "https://images.pexels.com/photos/33747710/pexels-photo-33747710.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "id": "villa-03",
+        "name": "Lakefront Sanctuary",
+        "tagline": "Overwater pavilion with glass floor viewing harbor",
+        "position": [6, 0.8, -2],
+        "rotation": [0, 0.8, 0],
+        "price": "$890 / night",
+        "bedrooms": 4,
+        "max_guests": 8,
+        "rating": 4.99,
+        "features": ["Direct Water Dock", "Private Chef Service", "Infrared Sauna", "Zero-G Loungers"],
+        "hero_image": "https://images.unsplash.com/photo-1761549148430-85b7abf00f33?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBmb3Jlc3QlMjB2aWxsYSUyMGV4dGVyaW9yJTIwYXJjaGl0ZWN0dXJlJTIwbGFrZSUyMHJldHJlYXR8ZW58MHx8fHwxNzg3MDcyNzYzfDA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "villa-04",
+        "name": "Overlook Treehouse",
+        "tagline": "Architectural cantilever villa perched high above the cove",
+        "position": [4, 3.4, 6],
+        "rotation": [0, -0.2, 0],
+        "price": "$480 / night",
+        "bedrooms": 1,
+        "max_guests": 2,
+        "rating": 4.95,
+        "features": ["Stargazing Telescope", "360 Forest Glass", "Suspended Hammock Net", "Wine Cellar"],
+        "hero_image": "https://images.pexels.com/photos/30547660/pexels-photo-30547660.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "id": "villa-05",
+        "name": "Emerald Cliff Chalet",
+        "tagline": "Monolithic stone and timber estate on the sunset ridge",
+        "position": [0, 4.0, -8],
+        "rotation": [0, 0.1, 0],
+        "price": "$1,150 / night",
+        "bedrooms": 5,
+        "max_guests": 10,
+        "rating": 5.0,
+        "features": ["Infinity Edge Pool", "Private Helipad Access", "Outdoor Cinema", "Wine Tasting Lounge"],
+        "hero_image": "https://images.unsplash.com/photo-1764346040439-375f6a87019c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjBmb3Jlc3QlMjB2aWxsYSUyMGV4dGVyaW9yJTIwYXJjaGl0ZWN0dXJlJTIwbGFrZSUyMHJldHJlYXR8ZW58MHx8fHwxNzg3MDcyNzYzfDA&ixlib=rb-4.1.0&q=85"
+      }
+    ],
+    "micro_animations": [
+      "Volumetric floating clouds drifting slowly over mountains",
+      "Pine tree wind sway with vertex shader or subtle rotation lerp",
+      "Lake water ripples with custom shader / moving normal textures",
+      "Interior warm light breathing glow inside glass roof cabin geometry",
+      "Floating HTML/CSS 3D pin labels with dynamic elevation compensation"
+    ]
+  },
+  "layout_components": {
+    "header_nav": {
+      "type": "Fixed glassmorphic top header",
+      "elements": [
+        "Brand Logo (AURA Luxury Resort with golden leaf badge)",
+        "Date Range Selector (Interactive calendar popover matching forest palette)",
+        "Resort View Toggle (3D Interactive Map vs Admin Reservation Table)",
+        "Filter Pills (Bedrooms, Waterfront, Price Range)",
+        "Bookings Counter & Quick Admin Link"
+      ]
+    },
+    "reservation_panel": {
+      "type": "Right slide-over sheet (Drawer)",
+      "width": "w-full max-w-lg",
+      "contents": [
+        "Header with Villa Title, Price & Status Pill",
+        "Interactive Image Carousel / Gallery",
+        "Villa Specifications (Bedrooms, Bathrooms, Guests, Sq Ft)",
+        "Amenity Chips with Phosphor/Lucide icons",
+        "Interactive Date Picker & Guest Selector",
+        "Total Price Calculation Breakdown (Nights x Price + Resort Fee)",
+        "Instant Reservation Form (Guest Name, Email, Special Requests)",
+        "Reserve Now CTA Button with glowing hover animation"
+      ]
+    },
+    "admin_dashboard_view": {
+      "type": "Full-bleed or Modal Table View",
+      "contents": [
+        "Summary Metrics (Total Bookings, Revenue, Occupancy Rate, Active Guests)",
+        "Reservations Data Table with columns: Guest Name, Email, Villa, Check-in, Check-out, Total Price, Status, Created Date, Actions",
+        "Filter & Search Bar for instant guest/villa lookups",
+        "Cancel / Delete reservation action with live state sync back to 3D house colors"
+      ]
+    }
+  },
+  "image_urls": [
+    {
+      "url": "https://images.unsplash.com/photo-1762568702039-9ef749e06152?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHw0fHxsdXh1cnklMjBmb3Jlc3QlMjB2aWxsYSUyMGV4dGVyaW9yJTIwYXJjaGl0ZWN0dXJlJTIwbGFrZSUyMHJldHJlYXR8ZW58MHx8fHwxNzg3MDcyNzYzfDA&ixlib=rb-4.1.0&q=85",
+      "category": "Villa 01 Exterior",
+      "description": "Modern house nestled in a lush forest by the water"
+    },
+    {
+      "url": "https://images.pexels.com/photos/33747710/pexels-photo-33747710.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "category": "Villa 02 Exterior",
+      "description": "Contemporary villa surrounded by lush greenery and pine tree backdrop"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1761549148430-85b7abf00f33?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBmb3Jlc3QlMjB2aWxsYSUyMGV4dGVyaW9yJTIwYXJjaGl0ZWN0dXJlJTIwbGFrZSUyMHJldHJlYXR8ZW58MHx8fHwxNzg3MDcyNzYzfDA&ixlib=rb-4.1.0&q=85",
+      "category": "Villa 03 Exterior",
+      "description": "Modern lakeside overwater retreat on stilts"
+    },
+    {
+      "url": "https://images.pexels.com/photos/30547660/pexels-photo-30547660.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "category": "Villa 04 Exterior",
+      "description": "Contemporary glass chalet in serene woods beside quiet lake"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1764346040439-375f6a87019c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjBmb3Jlc3QlMjB2aWxsYSUyMGV4dGVyaW9yJTIwYXJjaGl0ZWN0dXJlJTIwbGFrZSUyMHJldHJlYXR8ZW58MHx8fHwxNzg3MDcyNzYzfDA&ixlib=rb-4.1.0&q=85",
+      "category": "Villa 05 Exterior",
+      "description": "Grand timber & stone lodge on hillside above mist lake"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1768072308445-37bb1b4c9b0e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwyfHxsdXh1cnklMjBmb3Jlc3QlMjB2aWxsYSUyMGV4dGVyaW9yJTIwYXJjaGl0ZWN0dXJlJTIwbGFrZSUyMHJldHJlYXR8ZW58MHx8fHwxNzg3MDcyNzYzfDA&ixlib=rb-4.1.0&q=85",
+      "category": "Resort Grounds General",
+      "description": "Lakeside white sanctuary with evergreen timber surrounds"
+    }
+  ],
+  "testing_data_testids": {
+    "nav": {
+      "brand_logo": "brand-logo",
+      "date_selector_btn": "nav-date-selector-button",
+      "view_admin_toggle": "nav-admin-view-toggle",
+      "view_map_toggle": "nav-map-view-toggle"
+    },
+    "map": {
+      "canvas_container": "3d-resort-map-canvas",
+      "villa_pin_prefix": "villa-pin-",
+      "reset_camera_btn": "reset-camera-button"
+    },
+    "reservation_drawer": {
+      "panel": "reservation-panel-drawer",
+      "close_btn": "close-reservation-panel-button",
+      "guest_name_input": "reservation-form-guest-name",
+      "guest_email_input": "reservation-form-guest-email",
+      "checkin_date_input": "reservation-form-checkin-date",
+      "checkout_date_input": "reservation-form-checkout-date",
+      "guests_count_select": "reservation-form-guests-count",
+      "submit_booking_btn": "reservation-form-submit-button"
+    },
+    "admin": {
+      "table": "admin-reservations-table",
+      "search_input": "admin-search-input",
+      "delete_btn_prefix": "admin-delete-reservation-",
+      "refresh_btn": "admin-refresh-button"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Ensure React Three Fiber / Three.js canvas initializes properly with smooth OrbitControls or GSAP camera position lerping.",
+    "Implement 5 distinct 3D low-poly procedural structures (A-frame, Cabin with Glass Roof, Overwater Villa, Treehouse, Ridge Lodge) so each house is recognizable in 3D.",
+    "Glass Roof inner glow: Add point lights inside house meshes with warm golden intensity.",
+    "Hover interaction: Attach onPointerOver / onPointerOut on villa 3D groups to trigger cursor crosshair change, soft neon bounding glow (mesh wireframe or emissive outline), andHtml tag glass card fade-in.",
+    "Click interaction: Smoothly transition camera from default high top-down (e.g. pos: [0, 25, 25], target: [0, 0, 0]) to close-up isometric focal view of selected villa (e.g. pos: [x+6, y+5, z+6], target: [x, y, z]).",
+    "Reservation State Synchronization: Store booked dates in React state / backend. When top nav date picker changes or when user submits reservation, check if villa has overlap. If booked, set villa mesh material to dark matte grey (#1F2926) and add a subtle pulsating ambient amber glow mesh ring.",
+    "Admin View: Provide a quick tab toggle in top nav to open the Admin Reservations Table where all stored backend reservations can be viewed, filtered, or deleted.",
+    "Include toast notifications using sonner when a booking is created or cancelled.",
+    "Make sure all interactive elements feature data-testid attributes according to testing_data_testids section."
+  ]
+}
